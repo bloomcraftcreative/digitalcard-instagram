@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowLeft, Home, Music, Palette, Lightbulb, Zap, MessageSquare } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 // Define a richer set of content points with icons for visual appeal
@@ -79,8 +80,10 @@ export default function AboutPage() {
                 <div className="group cursor-pointer relative">
                   <div className="absolute inset-0 bg-linear-to-r from-amber-500/20 to-orange-600/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative w-20 h-20 rounded-full overflow-hidden border-3 border-zinc-700/50 bg-zinc-800 shadow-xl group-hover:shadow-amber-500/40 transition-shadow duration-500">
-                    <img
-                      src="/professional-woman-business-portrait.jpg"
+                    <Image
+                      width={100}
+                      height={100}
+                      src="/logo.png"
                       alt="Lyrify Artist"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

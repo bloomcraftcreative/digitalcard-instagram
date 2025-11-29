@@ -1,13 +1,47 @@
 "use client"
 
-import { Music, Share2, MessageCircle, Mail,Instagram,Facebook,ExternalLink  } from "lucide-react"
+import { Music, Share2, MessageCircle, Mail, Instagram, Facebook, ExternalLink, Clipboard, Check } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { hr } from "date-fns/locale"
 
 export default function LyrifyProfile() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null)
+  const [isCopied, setIsCopied] = useState(false) // State for copy clipboard success
+
+  // Define the URL to be shared (replace with your actual profile URL)
+  const PROFILE_URL = "https://digitalcard.instagram.vercel.app/" // Example URL
+  const SHARE_TITLE = "Check out Lyrify's Digital Profile!"
+
+  /**
+   * Handles sharing the profile URL using the Web Share API or falling back to clipboard.
+   */
+  const handleShare = async () => {
+    // 1. Try Native Web Share API (Best for Mobile)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: SHARE_TITLE,
+          url: PROFILE_URL,
+        })
+      } catch (error) {
+        // User may have cancelled or error occurred
+        console.error('Error sharing:', error);
+      }
+    } 
+    // 2. Fallback to Copy to Clipboard (For Desktop/Non-supporting browsers)
+    else {
+      try {
+        await navigator.clipboard.writeText(PROFILE_URL)
+        setIsCopied(true)
+        setTimeout(() => setIsCopied(false), 2000) // Reset success icon after 2 seconds
+      } catch (err) {
+        console.error('Could not copy text: ', err)
+      }
+    }
+  }
 
   const buttons = [
     {
@@ -37,10 +71,17 @@ export default function LyrifyProfile() {
   ]
 
   const socials = [
-    { id: "instagram", icon: <Instagram />, label: "Instagram" },
-    { id: "facebook", icon: <Facebook />, label: "Facebook" },
-    { id: "email", icon: <Mail/>, label: "Email" },
-    { id: "share", icon: <ExternalLink />, label: "Share" },
+    { id: "instagram", icon: <Instagram />, label: "Instagram" , href: "https://www.instagram.com/_lyrify_1/" },
+    { id: "facebook", icon: <Facebook />, label: "Facebook", href:"#" },
+    { id: "email", icon: <Mail/>, label: "Email", href:"#" },
+    // Changed share to use a button element instead of just a static icon
+    { 
+      id: "share", 
+      icon: isCopied ? <Check className="text-emerald-400" /> : <ExternalLink />, // Dynamically change icon
+      label: isCopied ? "Link Copied!" : "Share Profile", 
+      action: handleShare,
+      href: "#" 
+    },
   ]
 
   return (
@@ -63,10 +104,12 @@ export default function LyrifyProfile() {
                 <div className="relative w-28 h-28 rounded-full overflow-hidden border-3 border-zinc-700/50 bg-zinc-800 shadow-xl group-hover:shadow-amber-500/20 transition-shadow duration-500">
                   <Image
                     width={112}
-                    height={112}  
+                    height={112}  
                     src="/logo.png"
                     alt="Lyrify Artist"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    // Placeholder dimensions/styling for the image for correct rendering
+                    style={{ position: 'absolute', objectFit: 'cover' }}
                   />
                 </div>
               </div>
@@ -84,7 +127,7 @@ export default function LyrifyProfile() {
                 {buttons.map((btn, idx) => {
                   const Icon = btn.icon
                   return (
-                    <Link href={btn.href} key={btn.id} passHref>
+                    <Link href={btn.href} key={btn.id} passHref >
                       <button
                         onMouseEnter={() => setHoveredButton(btn.id)}
                         onMouseLeave={() => setHoveredButton(null)}
@@ -103,17 +146,41 @@ export default function LyrifyProfile() {
 
               {/* Social Links */}
               <div className="flex gap-3 pt-2 justify-center flex-wrap">
-                {socials.map((social) => (
-                  <button
-                    key={social.id}
-                    onMouseEnter={() => setHoveredSocial(social.id)}
-                    onMouseLeave={() => setHoveredSocial(null)}
-                    className="w-10 h-10 rounded-full border border-zinc-700/50 flex items-center justify-center text-white text-xs transition-all duration-300 hover:border-amber-500/50 hover:bg-amber-500/10 hover:shadow-lg hover:shadow-amber-500/15 hover:scale-110 active:scale-95"
-                    title={social.label}
-                  >
-                    <span className="text-base font-semibold">{social.icon}</span>
-                  </button>
-                ))}
+                {socials.map((social) => {
+                  const isShareButton = social.id === 'share';
+
+                  if (isShareButton) {
+                    return (
+                      <button
+                        key={social.id}
+                        onClick={handleShare}
+                        onMouseEnter={() => setHoveredSocial(social.id)}
+                        onMouseLeave={() => setHoveredSocial(null)}
+                        className="w-10 h-10 rounded-full border border-zinc-700/50 flex items-center justify-center text-white text-xs transition-all duration-300 hover:border-amber-500/50 hover:bg-amber-500/10 hover:shadow-lg hover:shadow-amber-500/15 hover:scale-110 active:scale-95"
+                        title={social.label}
+                        
+                      >
+                        <span className={`text-base font-semibold ${isCopied ? 'scale-110' : ''} transition-transform duration-300`}>
+                          {social.icon}
+                        </span>
+                      </button>
+                    );
+                  }
+                  
+                 
+                  return (
+                    <button
+                      key={social.id}
+                      onMouseEnter={() => setHoveredSocial(social.id)}
+                      onMouseLeave={() => setHoveredSocial(null)}
+                      className="w-10 h-10 rounded-full border border-zinc-700/50 flex items-center justify-center text-white text-xs transition-all duration-300 hover:border-amber-500/50 hover:bg-amber-500/10 hover:shadow-lg hover:shadow-amber-500/15 hover:scale-110 active:scale-95"
+                      title={social.label}
+                      onClick={()=> window.open(social.href,"_self")}
+                    >
+                      <span className="text-base font-semibold">{social.icon}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               <p className="text-xs text-zinc-500 tracking-widest uppercase pt-1">Tap to connect</p>
