@@ -9,7 +9,7 @@ export default function ContactPage() {
       id: "instagram",
       label: "Instagram DM",
       icon: MessageCircle,
-      href: "https://www.instagram.com/direct/t/17842601622591643/",
+      href: "https://ig.me/u/_lyrify_1",
       color: "amber",
       subtitle: "Best for quick questions & collabs.",
     },

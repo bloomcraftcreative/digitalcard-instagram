@@ -30,7 +30,7 @@ export default function LyrifyProfile() {
         // User may have cancelled or error occurred
         console.error('Error sharing:', error);
       }
-    } 
+    }
     // 2. Fallback to Copy to Clipboard (For Desktop/Non-supporting browsers)
     else {
       try {
@@ -60,7 +60,7 @@ export default function LyrifyProfile() {
       id: "collab",
       label: "Collab / DM Me",
       icon: MessageCircle,
-      href: "https://www.instagram.com/direct/t/17842601622591643/",
+      href: "https://ig.me/u/_lyrify_1",
     },
     {
       id: "contact",
@@ -71,16 +71,16 @@ export default function LyrifyProfile() {
   ]
 
   const socials = [
-    { id: "instagram", icon: <Instagram />, label: "Instagram" , href: "https://www.instagram.com/_lyrify_1/" },
-    { id: "facebook", icon: <Facebook />, label: "Facebook", href:"#" },
-    { id: "email", icon: <Mail/>, label: "Email", href:"#" },
+    { id: "instagram", icon: <Instagram />, label: "Instagram", href: "https://www.instagram.com/_lyrify_1/" },
+    { id: "facebook", icon: <Facebook />, label: "Facebook", href: "#" },
+    { id: "email", icon: <Mail />, label: "Email", href: "#" },
     // Changed share to use a button element instead of just a static icon
-    { 
-      id: "share", 
+    {
+      id: "share",
       icon: isCopied ? <Check className="text-emerald-400" /> : <ExternalLink />, // Dynamically change icon
-      label: isCopied ? "Link Copied!" : "Share Profile", 
+      label: isCopied ? "Link Copied!" : "Share Profile",
       action: handleShare,
-      href: "#" 
+      href: "#"
     },
   ]
 
@@ -104,7 +104,7 @@ export default function LyrifyProfile() {
                 <div className="relative w-28 h-28 rounded-full overflow-hidden border-3 border-zinc-700/50 bg-zinc-800 shadow-xl group-hover:shadow-amber-500/20 transition-shadow duration-500">
                   <Image
                     width={112}
-                    height={112}  
+                    height={112}
                     src="/logo.png"
                     alt="Lyrify Artist"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -158,7 +158,7 @@ export default function LyrifyProfile() {
                         onMouseLeave={() => setHoveredSocial(null)}
                         className="w-10 h-10 rounded-full border border-zinc-700/50 flex items-center justify-center text-white text-xs transition-all duration-300 hover:border-amber-500/50 hover:bg-amber-500/10 hover:shadow-lg hover:shadow-amber-500/15 hover:scale-110 active:scale-95"
                         title={social.label}
-                        
+
                       >
                         <span className={`text-base font-semibold ${isCopied ? 'scale-110' : ''} transition-transform duration-300`}>
                           {social.icon}
@@ -166,8 +166,8 @@ export default function LyrifyProfile() {
                       </button>
                     );
                   }
-                  
-                 
+
+
                   return (
                     <button
                       key={social.id}
@@ -175,7 +175,7 @@ export default function LyrifyProfile() {
                       onMouseLeave={() => setHoveredSocial(null)}
                       className="w-10 h-10 rounded-full border border-zinc-700/50 flex items-center justify-center text-white text-xs transition-all duration-300 hover:border-amber-500/50 hover:bg-amber-500/10 hover:shadow-lg hover:shadow-amber-500/15 hover:scale-110 active:scale-95"
                       title={social.label}
-                      onClick={()=> window.open(social.href,"_self")}
+                      onClick={() => window.open(social.href, "_self")}
                     >
                       <span className="text-base font-semibold">{social.icon}</span>
                     </button>
@@ -184,6 +184,18 @@ export default function LyrifyProfile() {
               </div>
 
               <p className="text-xs text-zinc-500 tracking-widest uppercase pt-1">Tap to connect</p>
+              <p className="text-[14px] text-zinc-600 text-center pt-3 opacity-80 hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                Made with ✦ by
+                <a
+                  href="https://your-bloomcraft-link.com"
+                  target="_blank"
+                  className="text-amber-400 font-semibold hover:text-amber-300 flex items-center gap-1"
+                >
+                  Bloom Craft
+                  <span className="text-amber-400">↗</span>
+                </a>
+              </p>
+
             </div>
           </div>
         </div>
