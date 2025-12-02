@@ -186,14 +186,14 @@ export default function LyrifyProfile() {
               <p className="text-xs text-zinc-500 tracking-widest uppercase pt-1">Tap to connect</p>
               <p className="text-[14px] text-zinc-600 text-center pt-3 opacity-80 hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
                 Made with ✦ by
-                <a
-                  href="https://your-bloomcraft-link.com"
+                <Link
+                  href="https://www.instagram.com/bloomcraft._.creative/"
                   target="_blank"
                   className="text-amber-400 font-semibold hover:text-amber-300 flex items-center gap-1"
                 >
                   Bloom Craft
                   <span className="text-amber-400">↗</span>
-                </a>
+                </Link>
               </p>
 
             </div>
